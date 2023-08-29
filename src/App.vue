@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import Home from "./components/Header.vue";
 import Slider from "./components/Slider.vue";
-import { ref } from "vue";
-
-const example = ref("");
+import ProductCard from "./components/ProductCard.vue";
 </script>
 
 <template>
   <div>
     <Home></Home>
     <Slider></Slider>
+    <product-card></product-card>
   </div>
 </template>
 
