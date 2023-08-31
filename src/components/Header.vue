@@ -44,7 +44,7 @@
           <input
             type="text"
             class="w-full rounded-md border border-[#DDE2E4] px-3 py-2 text-sm"
-            value="DJI phantom"
+            value="Search For items"
           />
         </div>
 
