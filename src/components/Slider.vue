@@ -1,11 +1,7 @@
 <template>
   <div>
-    <transition-group name="fade" tag="div" class="flex h-[600px] w-screen">
-      <button
-        type="button"
-        class="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:text-white px-3"
-        @click="prev"
-      >
+    <transition-group name="fade" tag="div" class="grid grid-flow-col h-[600px] w-screen">
+      <button type="button" @click="prev" class="text-black rounded-r-md h-[70vh] px-3">
         <div class="flex flex-row align-middle">
           <svg
             class="w-5 mr-2"
@@ -23,14 +19,14 @@
         </div>
       </button>
       <div class="h-full w-full">
-        <img :src="currentImg" class="h-full object-contain mx-auto" />
+        <img :src="currentImg" class="h-[70vh] w-[1100px] object-contain mx-auto" />
       </div>
       <button
         type="button"
         @click="next"
-        class="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 px-3"
+        class="text-black rounded-r-md py-2 h-[70vh] z-10"
       >
-        <div class="flex flex-row align-middle">
+        <div class="flex">
           <span class="mr-2">Next</span>
           <svg
             class="w-5 ml-2"
@@ -57,9 +53,9 @@ export default defineComponent({
   setup() {
     const images: string[] = [
       "https://i.pinimg.com/736x/c5/79/6d/c5796df4f44ea2c26643da920b15d5d7.jpg",
-      "https://th.bing.com/th/id/R.6deae59e1270f6b360977aa05d56f9e8?rik=O9ArwgSJaO%2b05A&riu=http%3a%2f%2fwww.shopickr.com%2fwp-content%2fuploads%2f2015%2f10%2famazon-india-electronics-sale-2015-banner1.jpg&ehk=VACx5MRwH8sPudZb9Q5uIdL%2bMRBOxWn%2bBfVFKT5HCvw%3d&risl=&pid=ImgRaw&r=0",
-      "https://th.bing.com/th/id/OIP.s0EY9fBQ7BO1ChTYdvWFWAHaD3?w=368&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-      "https://www.zotezo.com/in/wp-content/uploads/sites/2/2020/08/amazon-pharmacy-banner.jpg",
+      "https://i.pinimg.com/originals/bc/47/de/bc47deec54383aa62b31e041f71327c7.jpg",
+      "https://i.pinimg.com/originals/a6/c0/a2/a6c0a283cde4ff0402099d4d6b2a7417.jpg",
+      "https://www.medicinecoupon.in/wp-content/uploads/2019/10/990x450.jpg",
     ];
     const timer = ref<number>();
     const currentIndex = ref<number>(0);
