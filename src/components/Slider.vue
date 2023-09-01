@@ -1,7 +1,15 @@
 <template>
   <div>
-    <transition-group name="fade" tag="div" class="grid grid-flow-col h-[600px] w-screen">
-      <button type="button" @click="prev" class="text-black rounded-r-md h-[70vh] px-3">
+    <transition-group
+      name="fade"
+      tag="div"
+      class="grid grid-flow-col items-center h-[600px] w-screen bg-gray-100"
+    >
+      <button
+        type="button"
+        @click="prev"
+        class="text-black rounded-r-md h-[70vh] px-3 absolute left-0"
+      >
         <div class="flex flex-row align-middle">
           <svg
             class="w-5 mr-2"
@@ -18,13 +26,15 @@
           <p class="ml-2">Prev</p>
         </div>
       </button>
-      <div class="h-full w-full">
-        <img :src="currentImg" class="h-[70vh] w-[1100px] object-contain mx-auto" />
+      -->
+      <div class="h-full flex justify-center items-center w-[50%]">
+        <img :src="currentImg" class="w-full object-contain mx-auto" />
       </div>
+
       <button
         type="button"
         @click="next"
-        class="text-black rounded-r-md py-2 h-[70vh] z-10"
+        class="text-black rounded-r-md py-2 h-[70vh] z-10 absolute right-0"
       >
         <div class="flex">
           <span class="mr-2">Next</span>
