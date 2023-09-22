@@ -1,9 +1,7 @@
 <template>
   <!-- component -->
   <!-- This is an example component -->
-  <h1 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 ml-[130px] mt-[100px]">
-    Browse Through Various Products
-  </h1>
+
   <div class="flex w-screen justify-center items-center">
     <div
       class="mt-10 mx-auto grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
@@ -22,7 +20,10 @@
         </a>
         <div class="p-5">
           <a href="#">
-            <h5 class="text-gray-900 font-bold text-2xl tracking-tight mb-2">
+            <h5
+              class="text-gray-900 font-bold text-2xl tracking-tight mb-2"
+              @click="goToProductsPage(product.id)"
+            >
               {{
                 isCardExpanded(product)
                   ? product.title.substring(0, 30)
@@ -46,24 +47,13 @@
             </button>
           </p>
           <div class="flex w-full justify-between absolute bottom-2 right-1 px-4">
-            <a
-              href="#"
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+              @click="addtocart(product)"
             >
               Add to Cart
-              <svg
-                class="-mr-1 ml-2 h-4 w-4"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </a>
+            </button>
+
             <h1 class="text-[20px]">M.R.P $ {{ product.price }}</h1>
           </div>
         </div>
@@ -75,20 +65,22 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import { useProductStore, productType } from "../store/products";
+import { useRouter } from "vue-router";
 
 const products = ref<productType[]>([]);
 
 const expandedCards = ref<number[]>([]);
 
 export default defineComponent({
+  props: ["inputSearch"],
   setup() {
     const productStore = useProductStore();
+    const router = useRouter();
 
     onMounted(async () => {
       await productStore.fetchProducts();
       products.value = productStore.products;
     });
-
     const toggleDescriptionLength = (product: productType) => {
       const index = expandedCards.value.indexOf(product.id);
       if (index === -1) {
@@ -100,10 +92,18 @@ export default defineComponent({
     const isCardExpanded = (product: productType) => {
       return expandedCards.value.includes(product.id);
     };
+    const goToProductsPage = (id: number) => {
+      router.push({ name: "ProductView", params: { id } });
+    };
+    const addtocart = (product: productType) => {
+      productStore.cart.push(product);
+    };
     return {
       products,
+      addtocart,
       toggleDescriptionLength,
       isCardExpanded,
+      goToProductsPage,
     };
   },
 });

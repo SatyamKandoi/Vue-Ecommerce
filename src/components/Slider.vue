@@ -3,12 +3,14 @@
     <transition-group
       name="fade"
       tag="div"
-      class="grid grid-flow-col items-center h-[600px] w-screen bg-gray-100"
+      class="grid grid-cols-3 items-center h-[400px] xs:h-[50%] max-h-[600px] w-screen bg-gray-100"
+      :key="currentImg"
     >
       <button
         type="button"
         @click="prev"
-        class="text-black rounded-r-md h-[70vh] px-3 absolute left-0"
+        class="text-black rounded-r-md h-full px-3 left-0"
+        :key="currentIndex"
       >
         <div class="flex flex-row align-middle">
           <svg
@@ -23,21 +25,20 @@
               clip-rule="evenodd"
             ></path>
           </svg>
-          <p class="ml-2">Prev</p>
         </div>
       </button>
-      -->
-      <div class="h-full flex justify-center items-center w-[50%]">
-        <img :src="currentImg" class="w-full object-contain mx-auto" />
+
+      <div :key="currentImg">
+        <img :src="currentImg" />
       </div>
 
       <button
         type="button"
         @click="next"
-        class="text-black rounded-r-md py-2 h-[70vh] z-10 absolute right-0"
+        class="text-black rounded-r-md py-2 h-[full] absolute right-0"
+        :key="currentIndex"
       >
         <div class="flex">
-          <span class="mr-2">Next</span>
           <svg
             class="w-5 ml-2"
             fill="currentColor"
@@ -52,6 +53,7 @@
           </svg>
         </div>
       </button>
+      
     </transition-group>
   </div>
 </template>
@@ -75,6 +77,9 @@ export default defineComponent({
     };
 
     const next = () => {
+      if (currentIndex.value > images.length - 1) {
+        currentIndex.value = 0;
+      }
       currentIndex.value++;
     };
     const prev = () => {

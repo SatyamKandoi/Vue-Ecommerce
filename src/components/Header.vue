@@ -1,7 +1,7 @@
 <template>
   <div class="border py-3 px-6">
     <div class="grid grid-flow-col grid-cols-1">
-      <div class="items-center flex">
+      <div class="items-center flex cursor-pointer" @click="navigate">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6 text-red-500"
@@ -41,6 +41,7 @@
         </div>
         <input
           type="text"
+          v-model="search"
           class="w-full rounded-md border border-[#DDE2E4] px-3 py-2 text-sm hidden md:flex"
           placeholder="Search For items"
         />
@@ -86,6 +87,7 @@
 
         <div
           class="flex cursor-pointer items-center gap-x-1 rounded-md py-2 px-4 hover:bg-gray-100"
+          @click="store.setcartaction"
         >
           <div class="relative">
             <svg
@@ -100,10 +102,13 @@
             </svg>
             <span
               class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white"
-              >0</span
+              >{{ store.cart.length }}</span
             >
           </div>
           <span class="text-sm font-medium">Cart</span>
+        </div>
+        <div v-show="store.setCart">
+          <CartTab />
         </div>
 
         <div
@@ -113,57 +118,29 @@
         </div>
       </div>
     </div>
-
-    <div class="mt-4 hidden items-center justify-between md:hidden lg:flex">
-      <div class="flex gap-x-2 py-1 px-2"></div>
-
-      <div class="flex gap-x-8">
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >Best seller</span
-        >
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >New Releases</span
-        >
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >Books</span
-        >
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >Computers</span
-        >
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >Fashion</span
-        >
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >Health</span
-        >
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >Pharmacy</span
-        >
-        <span
-          class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-          >Toys & Games</span
-        >
-      </div>
-
-      <span
-        class="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100"
-        >Becoma a seller</span
-      >
-    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { defineComponent, ref, watch } from "vue";
+import router from "../routes";
+import CartTab from "./CartTab.vue";
+import { useProductStore } from "../store/products";
 export default defineComponent({
-  setup() {},
+  setup() {
+    const search = ref("");
+
+    const store = useProductStore();
+    const navigate = () => {
+      router.push({ name: "Home" });
+    };
+
+    watch(search, () => {
+      store.setSearchBarData(search.value);
+    });
+
+    return { navigate, store, search };
+  },
+  components: { CartTab },
 });
 </script>
